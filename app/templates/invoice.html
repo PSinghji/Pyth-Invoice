@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice #{{ invoice[3] }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .invoice-container {
+            max-width: 800px;
+            margin: auto;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header img {
+            max-width: 150px;
+            margin-bottom: 10px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .details {
+            margin-bottom: 30px;
+        }
+        .details p {
+            margin: 5px 0;
+        }
+        .items {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .items th, .items td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .items th {
+            background-color: #f4f4f4;
+        }
+        .total {
+            text-align: right;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .actions a {
+            display: inline-block;
+            padding: 10px 15px;
+            text-decoration: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            margin: 0 5px;
+        }
+        .actions a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-container">
+        <div class="header">
+            {% if invoice[9] %}
+            <img src="{{ invoice[9] }}" alt="Company Logo">
+            {% endif %}
+            <h1>Invoice #{{ invoice[3] }}</h1>
+        </div>
+        <div class="details">
+            <p><strong>Company Name:</strong> {{ invoice[1] }}</p>
+            <p><strong>GST Number:</strong> {{ invoice[2] }}</p>
+            <p><strong>Customer Name:</strong> {{ invoice[4] }}</p>
+            <p><strong>Customer Address:</strong> {{ invoice[5] }}</p>
+            <p><strong>Customer GST:</strong> {{ invoice[6] }}</p>
+        </div>
+        <table class="items">
+            <thead>
+                <tr>
+                    <th>Item Description</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in invoice[7].split(',') %}
+                {% set parts = item.split(':') %}
+                <tr>
+                    <td>{{ parts[0] }}</td>
+                    <td>{{ parts[1] }}</td>
+                    <td>{{ parts[2] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p class="total">Total Amount: ₹{{ invoice[8] }}</p>
+        <div class="actions">
+            <a href="/download/{{ invoice[0] }}">Download PDF</a>
+            <a href="/">Back to List</a>
+        </div>
+    </div>
+</body>
+</html>
