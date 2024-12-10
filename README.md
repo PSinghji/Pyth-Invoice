@@ -36,4 +36,11 @@ docker build -t invoice-creator .
 docker run -p 5000:5000 invoice-creator
 
 
+docker network create invoice-network
+docker run -d --name app --network invoice-network -p 5000:5000 invoice-creator
+
+docker run -d --name app --network invoice-network -p 5000:5000 -v $(pwd)/data:/app/data invoice-creator
+
+
+
 The application will be available at `http://localhost:5000`.

@@ -1,37 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice List</title>
+    <title>Invoices</title>
 </head>
 <body>
-    <h1>Invoice List</h1>
+    <h1>Invoices</h1>
     <a href="/create">Create New Invoice</a>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Invoice Number</th>
-                <th>Company Name</th>
-                <th>Customer Name</th>
-                <th>Total Amount</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for invoice in invoices %}
-            <tr>
-                <td>{{ invoice[3] }}</td> <!-- Invoice Number -->
-                <td>{{ invoice[1] }}</td> <!-- Company Name -->
-                <td>{{ invoice[4] }}</td> <!-- Customer Name -->
-                <td>{{ invoice[8] }}</td> <!-- Total Amount -->
-                <td>
-                    <a href="/invoice/{{ invoice[0] }}">View</a> |
-                    <a href="/download/{{ invoice[0] }}">Download</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <ul>
+        {% for invoice in invoices %}
+        <li>
+            <a href="/invoice/{{ invoice.id }}">{{ invoice.company_name }} - {{ invoice.invoice_date }}</a>
+        </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
