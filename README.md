@@ -33,13 +33,15 @@ To run the application in a Docker container:
 docker build -t invoice-creator .
 
 2. Run the Docker container:
-docker run -p 5000:5000 invoice-creator
-
 
 docker network create invoice-network
-docker run -d --name app --network invoice-network -p 5000:5000 invoice-creator
 
-docker run -d --name app --network invoice-network -p 5000:5000 -v $(pwd)/data:/app/data invoice-creator
+
+docker run -d --name db --network invoice-network -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=invoice_db -p 3306:3306 mysql
+
+docker run -d --name app --network invoice-network -v ./app:/app -e FLASK_ENV=development -e MYSQL_HOST=db -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=invoice_db -p 5000:5000 invoice-creator
+
+
 
 
 
