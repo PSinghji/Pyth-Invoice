@@ -12,4 +12,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Run the Flask application
-CMD ["flask", "run"]
+CMD ["python", "main.py"]
